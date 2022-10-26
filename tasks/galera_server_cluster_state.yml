@@ -49,3 +49,4 @@
   when:
     - _cluster_name.rc != 0
     - (_cluster_name.stdout.split()[-1] | default(false)) != galera_cluster_name
+  tags: cluster_name_check
