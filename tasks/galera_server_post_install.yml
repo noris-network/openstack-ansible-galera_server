@@ -144,7 +144,7 @@
       dest: "{{ galera_etc_conf_file }}"
       config_overrides: "{{ galera_my_cnf_overrides }}"
       config_type: "ini"
-    - src: cluster.cnf.j2
+    - src: "{{ galera_cluster_config_template }}"
       dest: "{{ galera_etc_include_dir }}/cluster.cnf"
       config_overrides: "{{ galera_cluster_cnf_overrides }}"
       config_type: "ini"
