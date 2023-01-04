@@ -87,7 +87,7 @@ def check_backups(dest, warning, critical, full_backup_filename):
         last_mariabackup_full = datetime.strptime(max([os.path.normpath(dest+'/'+f) for f in os.listdir(dest) if f.startswith(full_backup_filename)], key=os.path.getmtime).split(full_backup_filename)[1], '%Y%m%d-%H%M%S')
     except ValueError:
         print("No files found, you may need to check your destination directory or add a suffix.")
-        raise SystemExit()
+        raise SystemExit(2)
     warning_time = datetime.today() - timedelta(days=warning)
     critical_time = datetime.today() - timedelta(days=critical)
     print_info = "Last mariadb backup date "+str(last_mariabackup_full)
