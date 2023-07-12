@@ -51,6 +51,7 @@
             RandomizedDelaySec: "{{ galera_mariadb_backups_full_randomized_delay_sec | default(omit) }}"
             Persistent: true
             Unit: "mariabackup-full.service"
+  when: galera_mariadb_backups_full_on_calendar is defined
 
 - name: Create service and timer for incremental backups
   import_role:
