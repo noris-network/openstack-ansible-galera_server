@@ -33,7 +33,6 @@
   changed_when: _remove_existing_mariadb_packages.rc == 2
   failed_when: _remove_existing_mariadb_packages.rc not in [0, 2]
   args:
-    warn: no
     executable: /bin/bash
 
 # In CentOS systems, /etc/my.cnf.d may already exist on the
@@ -93,16 +92,6 @@
     mode: '0644'
   with_items: "{{ galera_gpg_keys }}"
 
-- name: Install gpg keys
-  rpm_key: "{{ key }}"
-  with_items: "{{ galera_gpg_keys }}"
-  loop_control:
-    loop_var: key
-  register: _add_yum_keys
-  until: _add_yum_keys is success
-  retries: 5
-  delay: 2
-
 - name: Add galera repo
   yum_repository:
     name: "{{ galera_repo.name }}"
@@ -133,8 +122,6 @@
 # cleaned out whenever the repo config changes.
 - name: Force the expiry of the repo metadata
   command: "{{ ansible_facts['pkg_mgr'] }} clean metadata"
-  args:
-    warn: no
   when: add_galera_repos is changed
   tags:
     - skip_ansible_lint
